@@ -20,3 +20,10 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Notes added: [[rest-api-error-handling-and-status-codes]], [[stage1-review-retrospective]]
 - Notes updated: [[index]], [[double-entry-bookkeeping-principles]], [[integer-minor-units-money-math]], [[stage1-ai-session-setup]]
 - Requirements linked: [[FR-2]], [[FR-5]], [[TQ-3]], [[TQ-4]], [[TQ-7]], [[SE-1]], [[SE-3]], [[SE-7]], [[SB-2]], [[SB-6]]
+
+## [2026-11-08] ingest | Member 2 concurrency and storage research notes
+
+- Source: Financial_Ledger.pdf, SDLC_and_Workflow.pdf, SQLite documentation, Python sqlite3 documentation, CWE-367, Martin Fowler's pattern catalog, FastAPI and pytest documentation, and local experiments
+- Notes added: [[sqlite-acid-and-wal-concurrency]], [[race-conditions-and-optimistic-locking]], [[provider-interface-isolation]]
+- Notes updated: [[index]]
+- Requirements linked: [[FR-3]], [[FR-5]], [[TQ-1]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[TQ-5]], [[SE-3]], [[SE-6]], [[FR-2]]

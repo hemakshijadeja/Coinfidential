@@ -16,6 +16,9 @@ No notes yet.
 - [[double-entry-bookkeeping-principles]]: Debit == credit math, and why preventing the Vanishing Money Glitch also needs idempotency and concurrency controls. Requirements: [[FR-1]], [[FR-2]], [[FR-3]], [[FR-4]], [[FR-5]].
 - [[integer-minor-units-money-math]]: Why IEEE 754 floats fail for money, and how to store and enforce cents or paise as integers. Requirements: [[TQ-1]], [[TQ-4]], [[TQ-6]], [[FR-5]].
 - [[rest-api-error-handling-and-status-codes]]: Status codes and error formats for the API, compared with measured FastAPI defaults. Requirements: [[FR-2]], [[FR-5]], [[TQ-3]], [[TQ-4]], [[SE-3]], [[SE-7]].
+- [[sqlite-acid-and-wal-concurrency]]: SQLite ACID behavior, WAL mode, `BEGIN IMMEDIATE` and busy timeouts for safe simultaneous transfers. Requirements: [[FR-3]], [[TQ-2]], [[FR-5]], [[SE-3]].
+- [[race-conditions-and-optimistic-locking]]: Measured ToCToU double-spend races, comparing pessimistic locking with optimistic concurrency control. Requirements: [[FR-3]], [[TQ-4]], [[FR-2]], [[FR-5]], [[SE-3]].
+- [[provider-interface-isolation]]: A storage interface for SQLite, and when tests need an in-memory or fresh file database. Requirements: [[SE-6]], [[TQ-5]], [[TQ-1]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[FR-3]], [[SE-3]].
 
 ## Archive
 
