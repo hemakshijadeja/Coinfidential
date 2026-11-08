@@ -36,3 +36,10 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Notes updated: [[index]]
 - Requirements linked: [[FR-3]], [[FR-5]], [[TQ-1]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[TQ-5]], [[SE-3]], [[SE-6]], [[FR-2]]
 
+## [2026-11-09] ingest | Member 4 security and skills research notes, and Stage 1 review completed
+
+- Source: Financial_Ledger.pdf, SDLC_and_Workflow.pdf, OWASP Input Validation Cheat Sheet, OWASP API Security Top 10 2023, Pydantic documentation, Python sqlite3 documentation, Agent Skills documentation, skills-ref 0.1.1, Git history, GitHub public API and local experiments
+- Notes added: [[financial-api-security-and-validation]], [[agent-skills-and-second-brain-architecture]]
+- Notes updated: [[index]], [[stage1-review-retrospective]]
+- Requirements linked: [[TQ-1]], [[TQ-4]], [[TQ-6]], [[TQ-7]], [[FR-1]], [[FR-2]], [[FR-5]], [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]], [[SB-1]], [[SB-2]], [[SB-3]], [[SB-4]], [[SB-5]], [[SB-6]], [[SE-1]], [[SE-2]], [[SE-3]], [[SE-4]], [[SE-5]]
+
