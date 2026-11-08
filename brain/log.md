@@ -20,3 +20,10 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Notes added: [[rest-api-error-handling-and-status-codes]], [[stage1-review-retrospective]]
 - Notes updated: [[index]], [[double-entry-bookkeeping-principles]], [[integer-minor-units-money-math]], [[stage1-ai-session-setup]]
 - Requirements linked: [[FR-2]], [[FR-5]], [[TQ-3]], [[TQ-4]], [[TQ-7]], [[SE-1]], [[SE-3]], [[SE-7]], [[SB-2]], [[SB-6]]
+
+## [2026-11-08] ingest | Member 3 idempotency, audit trail and reconciliation research notes
+
+- Source: Financial_Ledger.pdf, IETF Idempotency-Key draft-08, Stripe API documentation, RFC 8785, Python hashlib documentation, SQLite documentation, Countingup article and local experiments
+- Notes added: [[idempotent-api-design-patterns]], [[immutable-audit-trail-and-reversals]], [[ledger-reconciliation-algorithms]]
+- Notes updated: [[index]]
+- Requirements linked: [[FR-1]], [[FR-2]], [[FR-3]], [[FR-4]], [[FR-5]], [[TQ-1]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[TQ-6]], [[SE-3]]

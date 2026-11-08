@@ -16,6 +16,9 @@ No notes yet.
 - [[double-entry-bookkeeping-principles]]: Debit == credit math, and why preventing the Vanishing Money Glitch also needs idempotency and concurrency controls. Requirements: [[FR-1]], [[FR-2]], [[FR-3]], [[FR-4]], [[FR-5]].
 - [[integer-minor-units-money-math]]: Why IEEE 754 floats fail for money, and how to store and enforce cents or paise as integers. Requirements: [[TQ-1]], [[TQ-4]], [[TQ-6]], [[FR-5]].
 - [[rest-api-error-handling-and-status-codes]]: Status codes and error formats for the API, compared with measured FastAPI defaults. Requirements: [[FR-2]], [[FR-5]], [[TQ-3]], [[TQ-4]], [[SE-3]], [[SE-7]].
+- [[idempotent-api-design-patterns]]: `Idempotency-Key` headers, SHA-256 payload hashing, atomic idempotency records and retry status codes. Requirements: [[FR-2]], [[TQ-1]], [[TQ-2]], [[TQ-4]], [[FR-3]], [[SE-3]].
+- [[immutable-audit-trail-and-reversals]]: Append-only triggers, the `REPLACE` gap, compensating reversals and tamper evidence. Requirements: [[FR-4]], [[FR-5]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[SE-3]].
+- [[ledger-reconciliation-algorithms]]: Reconciliation queries, which faults each one catches, and why they need one read transaction. Requirements: [[FR-5]], [[FR-1]], [[FR-2]], [[FR-3]], [[FR-4]], [[TQ-1]], [[TQ-3]], [[TQ-6]], [[SE-3]].
 
 ## Archive
 
