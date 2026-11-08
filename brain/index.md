@@ -9,7 +9,7 @@ No notes yet.
 ## Areas
 
 - [[stage1-ai-session-setup]]: AI session note on the Stage 1 setup, what worked and what failed. Requirements: [[SB-1]], [[SB-3]], [[SB-4]], [[SB-5]].
-- [[stage1-review-retrospective]]: Draft Stage 1 review note, with deliverable status. Requirements: [[SB-2]], [[SB-6]], [[SE-1]], [[TQ-7]].
+- [[stage1-review-retrospective]]: Stage 1 review with what worked, what did not, Stage 2 changes, deliverable status and the 4-member task breakdown. Requirements: [[SB-2]], [[SE-4]], [[SB-5]], [[SB-6]], [[SE-1]], [[TQ-7]].
 
 ## Resources
 
@@ -24,6 +24,9 @@ No notes yet.
 - [[sqlite-acid-and-wal-concurrency]]: SQLite ACID behavior, WAL mode, `BEGIN IMMEDIATE` and busy timeouts for safe simultaneous transfers. Requirements: [[FR-3]], [[TQ-2]], [[FR-5]], [[SE-3]].
 - [[race-conditions-and-optimistic-locking]]: Measured ToCToU double-spend races, comparing pessimistic locking with optimistic concurrency control. Requirements: [[FR-3]], [[TQ-4]], [[FR-2]], [[FR-5]], [[SE-3]].
 - [[provider-interface-isolation]]: A storage interface for SQLite, and when tests need an in-memory or fresh file database. Requirements: [[SE-6]], [[TQ-5]], [[TQ-1]], [[TQ-2]], [[TQ-3]], [[TQ-4]], [[FR-3]], [[SE-3]].
+
+- [[financial-api-security-and-validation]]: Negative amount inversion, strict amount and ID validation, injection, and the security test plan. Requirements: [[TQ-4]], [[TQ-1]], [[TQ-6]], [[FR-2]], [[FR-5]], [[SE-3]].
+- [[agent-skills-and-second-brain-architecture]]: The Agent Skills format, the five project skills and their status, and how to evaluate them. Requirements: [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]], [[SB-1]], [[SB-2]], [[SB-3]], [[SB-5]], [[SE-1]], [[TQ-7]], [[FR-1]], [[FR-5]].
 
 
 ## Archive
