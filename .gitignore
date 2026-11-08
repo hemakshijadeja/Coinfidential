@@ -1,0 +1,27 @@
+# Documents (requirement PDFs are never committed)
+*.pdf
+
+# Python
+__pycache__/
+.venv/
+
+# SQLite databases, including the sidecar files created by WAL mode
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Secrets
+.env
+
+# Local Claude settings (only .claude/skills/ is tracked)
+.claude/settings.json
+.claude/settings.local.json
+
+# OS
+.DS_Store
