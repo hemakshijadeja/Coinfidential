@@ -1,22 +1,38 @@
-# Coinfidential: Software Requirements Specification
+# Software Requirements Specification for Coinfidential
 
 Version 1.0 approved
 
 Prepared by Aditya Bhat (BT2024035), Subhadeep Das (BT2024219), Hemakshi Jadeja (BT2024002) and Hardh Kava (BT2024041)
 
+Coinfidential Team, Software Engineering, Semester 5
+
+November 9, 2026
+
+Repository: [github.com/hemakshijadeja/Coinfidential](https://github.com/hemakshijadeja/Coinfidential)
+
+## Revision History
+
+| Name | Date | Reason For Changes | Version |
+| --- | --- | --- | --- |
+| Aditya Bhat | 2026-11-09 | Initial SRS, restructured to the IEEE-format template and reduced to requirements | 1.0 draft |
+| Hemakshi Jadeja | 2026-11-09 | Formal review and approval in PR #5 | 1.0 approved |
+| Aditya Bhat | 2026-11-09 | Added Business Rules, Revision History and Appendices, documented the PR review remediation, and polished for submission | 1.0 approved |
+
 ## 1. Introduction
 
 ### 1.1 Purpose
 
-This document specifies the requirements for Coinfidential, a Financial Ledger and Digital Wallet RESTful API, at version 1.0. It states what the system must do. How it does so is decided in the Stage 2 design documents and ADRs. It is the Stage 1 deliverable required by SE-1.
+This document specifies the requirements for version 1.0 of Coinfidential, a Financial Ledger and Digital Wallet RESTful API. It defines what the system must do, while the Stage 2 design documents and ADRs will define how it does so. It is the Stage 1 deliverable required by SE-1.
 
-**Implementation status:** only `GET /health` exists, and it does not yet require the token specified in Section 3.3.1. All other behavior is specified but not yet built.
+**Implementation status:** only `GET /health` is implemented, and it does not yet require the token specified in Section 3.3.1. All other behavior is specified but not yet built.
 
 ### 1.2 Document Conventions
 
+This SRS follows Karl E. Wiegers' IEEE-format SRS template. Appendix A defines the terms it uses, and Appendix C lists the items still to be determined.
+
 - **Requirement IDs.** `FR-n` functional, `NFR-n` non-functional, `SK-n` agent skill, `TQ-n` testing and quality, `SE-n` software engineering, `SB-n` Second Brain. Security Testing is a named requirement in the brief, with no ID.
 - **"Shall" and "should".** "Shall" marks a mandatory requirement. "Should" marks a recommended one, which the team may change in Stage 2 with an ADR.
-- **Priority.** High, Medium or Low. All five features are High, because the brief requires each and TQ-3 tests each.
+- **Priority.** High, Medium or Low. All five features are High, because the brief requires each and TQ-3 tests each. Detailed requirements inherit the priority of their feature.
 - **Wikilinks.** `[[note-name]]` cites a research note in the `brain/` Obsidian vault, starting from [[index]].
 - **Decisions.** `OD-n` identifies a decision recorded in Section 2.7.
 
@@ -28,22 +44,16 @@ This document specifies the requirements for Coinfidential, a Financial Ledger a
 
 The course documents require NFR and SK sections but do not list individual NFR or SK IDs.
 
-| Term | Meaning |
+### 1.3 Intended Audience and Reading Suggestions
+
+This SRS is written for course reviewers, developers, testers, API client authors and skill authors. Section 2 describes the product, Section 3 its interfaces, Section 4 its features, Section 5 its nonfunctional requirements and business rules, and Section 6 the course-specific requirements.
+
+| Reader | Suggested reading |
 | --- | --- |
-| ADR | Architecture Decision Record |
-| Bearer token | A credential that gives access to whoever holds it (RFC 6750) |
-| Credit, debit | The two sides of a ledger transaction. Wallets are treated as liabilities, so a credit increases a wallet balance and a debit decreases it |
-| Idempotency key | A client-supplied value that identifies one logical request across retries |
-| Minor unit | The smallest unit of a currency, such as a cent or paisa |
-| PARA | Projects, Areas, Resources, Archive: the structure of the Second Brain |
-| Reversal | A new transaction that offsets an earlier one, leaving the original unchanged |
-| System account | An internal, non-user account per currency that funds opening balances. It may have a negative balance |
-| ToCToU | Time-of-Check to Time-of-Use, a race where state changes between a check and its use |
-| WAL | Write-Ahead Logging, a SQLite journal mode |
-
-### 1.3 Intended Audience
-
-Course reviewers should read all sections. Developers and testers should focus on Sections 2 to 5, API client authors on Sections 3.3 and 3.4, and skill authors on Section 6.1.
+| Course reviewers | All sections, in order |
+| Developers and testers | Sections 1.4 and 2, then Sections 3 to 5 |
+| API client authors | Section 1.4, then Sections 3.3 and 3.4 |
+| Skill authors | Section 1.4, then Section 6.1 |
 
 ### 1.4 Product Scope
 
@@ -115,7 +125,7 @@ Python 3.12, FastAPI and SQLite on a single host with a local filesystem. Develo
 
 ### 2.5 Design and Implementation Constraints
 
-The following shall apply. Research supporting each one, including candidate SQL and settings for Stage 2, is in the cited notes.
+The following constraints shall apply. The cited notes contain the supporting research, including candidate SQL and settings for Stage 2.
 
 - **SQLite in WAL mode.** The database shall use `PRAGMA journal_mode=WAL;`. WAL is not the race protection: tests with WAL on still reached -700 when the check and write were unprotected ([[sqlite-acid-and-wal-concurrency]]).
 - **`BEGIN IMMEDIATE` locking.** Every money-moving request shall run its checks and writes in one `BEGIN IMMEDIATE` transaction, which removes the ToCToU window. Optimistic locking produced 17 to 24 conflicts per trial where this produced none ([[race-conditions-and-optimistic-locking]]).
@@ -133,7 +143,7 @@ The team shall provide user documentation and developer API documentation, such 
 
 **Dependencies:** Python, FastAPI, Pydantic, Uvicorn and SQLite, pinned in `requirements.txt`. The IETF idempotency draft could change.
 
-**Decisions.** The brief does not settle these points. Adopted decisions and Stage 2 decisions each need an ADR under SE-3.
+**Decisions.** The brief does not settle these points. Adopted decisions and Stage 2 decisions each need an ADR under SE-3, and Appendix C tracks the items still to be determined.
 
 | ID | Decision | Outcome | Status |
 | --- | --- | --- | --- |
@@ -142,7 +152,7 @@ The team shall provide user documentation and developer API documentation, such 
 | OD-3 | Opening funds | Balanced entry against a per-currency system account | Adopted |
 | OD-4 | Supported currencies | At least two, with INR and USD recommended. The final list is for Stage 2 | Stage 2 |
 | OD-5 | Maximum amount | 10^12 minor units per transaction | **Closed** |
-| OD-6 | Is insufficient funds stored against the key? | Yes: a retry returns the same `409`, and a new attempt needs a new key | Adopted |
+| OD-6 | Is insufficient funds stored against the idempotency key? | Yes: a retry returns the same `409`, and a new attempt needs a new idempotency key | Adopted |
 | OD-7 | Idempotency record retention | Keep indefinitely, because FR-2 says retries must never double-charge | Adopted |
 | OD-8 | Reversal after the recipient spent the money | Reject with `409`, which keeps wallets from going negative | Adopted |
 | OD-9 | Partial reversals, and reversing a reversal | At most one full reversal per transfer. Whether to allow more is for Stage 2 | Stage 2 |
@@ -211,21 +221,21 @@ All errors shall use `application/problem+json` (RFC 9457), with `type`, `title`
 | Request | `from_wallet_id` and `to_wallet_id` (different UUIDs), `currency` (matching both wallets), `amount_minor` (strict integer, 1 to 10^12) |
 | Success | `201`, with `transfer_id`, the request's fields and `created_at`. A retry returns the stored status and body, with `Idempotent-Replayed: true` |
 
-| Status | Code | Meaning | Stored against key |
+| Status | Code | Meaning | Stored against idempotency key |
 | --- | --- | --- | --- |
-| `400` | `IDEMPOTENCY_KEY_INVALID` | Key missing or badly formed | No |
+| `400` | `IDEMPOTENCY_KEY_INVALID` | Idempotency key missing or badly formed | No |
 | `404` | `WALLET_NOT_FOUND` | Either wallet does not exist | No |
 | `409` | `INSUFFICIENT_FUNDS` | Balance is below the amount | Yes (OD-6) |
 | `409` | `IDEMPOTENCY_IN_PROGRESS` | Original request still processing, which is expected to be rare | No |
-| `422` | `IDEMPOTENCY_KEY_REUSED` | Same key with a different payload | No |
+| `422` | `IDEMPOTENCY_KEY_REUSED` | Same idempotency key with a different payload | No |
 | `422` | `VALIDATION_FAILED` | Invalid body, same wallet, or wrong currency | No |
 | `503` | `STORE_BUSY` | Could not get the write lock in time, sent with `Retry-After` | No |
 
-The stored fingerprint shall be a SHA-256 hash of the method, path and validated body, so a retry with reordered JSON still matches. Keys are scoped to the account that owns the source wallet.
+The stored fingerprint shall be a SHA-256 hash of the method, path and validated body, so that a retry with reordered JSON still matches. Idempotency keys are scoped to the account that owns the source wallet.
 
 #### 3.3.5 FR-3: Endpoints Under Concurrency
 
-FR-3 adds no endpoint. It applies to the money-moving endpoints above and below, which shall evaluate funds against the latest committed balance. A request that cannot get the write lock in a bounded time shall return `503`, and raw `database is locked` errors shall never reach a client.
+FR-3 adds no endpoint. It applies to the money-moving endpoints in Sections 3.3.4 and 3.3.6, which shall evaluate funds against the latest committed balance. A request that cannot get the write lock in a bounded time shall return `503`, and raw `database is locked` errors shall never reach a client.
 
 #### 3.3.6 FR-4: Reversals and Audit Trail
 
@@ -339,24 +349,24 @@ From the brief: "Transfer funds between two wallets. The endpoint must require a
 
 | Stimulus | Response |
 | --- | --- |
-| A valid transfer with a new key, from the caller's wallet | `201`, and the money moves |
-| The same key and payload again | The stored response, and no money moves |
-| The same key with a different payload | `422`, and no money moves |
-| A missing key, insufficient funds, or another user's source wallet | `400`, `409` or `403`, and no money moves |
+| A valid transfer with a new idempotency key, from the caller's wallet | `201`, and the money moves |
+| The same idempotency key and payload again | The stored response, and no money moves |
+| The same idempotency key with a different payload | `422`, and no money moves |
+| A missing idempotency key, insufficient funds, or another user's source wallet | `400`, `409` or `403` respectively, and no money moves |
 
 #### 4.2.3 Functional Requirements
 
 **FR-2.1** The transfer endpoint shall require an `Idempotency-Key` header.
 
-**FR-2.2** The key check, funds check, ledger entries, balance updates and idempotency record shall commit in one transaction.
+**FR-2.2** The idempotency key check, funds check, ledger entries, balance updates and idempotency record shall commit in one transaction.
 
-**FR-2.3** A retry with the same key and payload shall never move money again.
+**FR-2.3** A retry with the same idempotency key and payload shall never move money again.
 
 **FR-2.4** A transfer shall be accepted only from a wallet owned by the token's subject.
 
-**Invariants:** I-1 to I-7. For one key and payload, `|transactions(key)| <= 1`. A posted transfer of `a` changes `balance(from)` by `-a` and `balance(to)` by `+a`.
+**Invariants:** I-1 to I-7. For one idempotency key and payload, at most one transaction exists. A posted transfer of `a` changes `balance(from)` by `-a` and `balance(to)` by `+a`.
 
-**Pre-conditions:** a valid token that owns the source wallet, a valid key and body, and two different existing wallets in the same currency.
+**Pre-conditions:** a valid token that owns the source wallet, a valid idempotency key and body, and two different existing wallets in the same currency.
 
 **Post-conditions:** if posted, all writes committed together. If rejected, no ledger entries or balance changes.
 
@@ -369,8 +379,8 @@ From the brief: "Transfer funds between two wallets. The endpoint must require a
 
 1. A valid transfer returns `201`, moves the amount and writes exactly 2 entries.
 2. A retry returns the same status and body, with `Idempotent-Replayed: true`, and writes no entries.
-3. The same key with a different amount returns `422`, and the same fields in a different JSON order count as a retry.
-4. 8 concurrent requests with one key and payload produce 1 transfer and 8 identical responses.
+3. The same idempotency key with a different amount returns `422`, and the same fields in a different JSON order count as a retry.
+4. Eight concurrent requests with one idempotency key and payload produce 1 transfer and 8 identical responses.
 5. A failure injected before commit, followed by a retry, moves the money exactly once.
 6. An amount of 10^12 is accepted when funds allow, and 10^12 + 1 returns `422`.
 
@@ -394,7 +404,7 @@ From the brief: "Safely handle multiple simultaneous incoming/outgoing transfer 
 
 **FR-3.1** All money-moving requests shall run their funds check and writes in one `BEGIN IMMEDIATE` transaction.
 
-**FR-3.2** A lock timeout shall return `503`, roll back, and be safe to retry with the same key.
+**FR-3.2** A lock timeout shall return `503`, roll back, and be safe to retry with the same idempotency key.
 
 **Invariants.** For concurrent requests on wallet `w`, where `S` is the set that succeeded:
 
@@ -411,8 +421,8 @@ For k requests each spending a from balance b:   |S| == min(k, floor(b / a))
 
 **Acceptance criteria:**
 
-1. 8 concurrent spends of 100 from a balance of 100 produce 1 `201` and 7 `409` responses and a final balance of 0, in each of 5 runs.
-2. 8 concurrent spends of 10 from a balance of 100 all succeed, with a final balance of 20.
+1. Eight concurrent spends of 100 from a balance of 100 produce 1 `201` and 7 `409` responses and a final balance of 0, in each of 5 runs.
+2. Eight concurrent spends of 10 from a balance of 100 all succeed, with a final balance of 20.
 3. No response has status `500` or contains `database is locked`, and FR-5 reports `balanced: true` afterwards.
 4. The race test fails against a deliberately unprotected version of the transfer, which proves that it detects the bug.
 
@@ -429,7 +439,7 @@ From the brief: "Ledger records cannot be updated or deleted once written. Any c
 | Stimulus | Response |
 | --- | --- |
 | The source wallet's owner, or an admin, reverses a posted transfer | `201`, with 2 new offsetting entries, and the originals unchanged |
-| A retry with the same key | The stored response, and no money moves |
+| A retry with the same idempotency key | The stored response, and no money moves |
 | A second reversal, or a reversal of a reversal | `409` |
 | The recipient no longer holds the funds | `409` `INSUFFICIENT_FUNDS` |
 | Any attempt to change a ledger row, through the API or SQL | `405` from the API, and an error from the database, with the row unchanged |
@@ -453,7 +463,7 @@ From the brief: "Ledger records cannot be updated or deleted once written. Any c
 **Acceptance criteria:**
 
 1. Reversing a transfer of 100 restores both balances, and the ledger grows from 2 to 4 entries with the originals unchanged.
-2. A second reversal returns `409`, and a retry with the same key replays the original response.
+2. A second reversal returns `409`, and a retry with the same idempotency key replays the original response.
 3. `UPDATE`, `DELETE`, `INSERT OR REPLACE` and `REPLACE INTO` each fail to alter a row on an application connection.
 4. A reversal when the recipient no longer holds the funds returns `409`, and no balance changes.
 5. A direct change to a committed entry is detected.
@@ -539,7 +549,7 @@ These targets are the team's verification criteria.
 - The database rejects amounts that are not positive.
 - 100% of SQL uses bound parameters.
 
-A bearer token gives access to whoever holds it, so a stolen token works until it expires.
+**Residual risk.** A bearer token gives access to whoever holds it, so a stolen token remains usable until it expires.
 
 ### 5.4 Software Quality Attributes
 
@@ -550,7 +560,26 @@ A bearer token gives access to whoever holds it, so a stolen token works until i
 | NFR-7 | Provider Interface Decoupling | SQLite is isolated behind an interface (SE-6) | Exactly 1 package imports `sqlite3` or contains SQL, checked by an automated test | TQ-1, TQ-2 | [[provider-interface-isolation]] |
 | NFR-8 | Structured Error Handling | Every error is structured, stable and safe | 100% of 4xx and 5xx responses use `application/problem+json` with a stable `code`. 0 responses echo rejected input or show a stack trace. `NaN` returns `422`, not `500` | TQ-3, TQ-4 | [[rest-api-error-handling-and-status-codes]] |
 
-## 6. Other Requirements (Course Specifics)
+### 5.5 Business Rules
+
+These rules apply regardless of how the system is implemented. Each one comes from a requirement or decision stated earlier in this document.
+
+| ID | Rule | Source |
+| --- | --- | --- |
+| BR-1 | Every balance is backed by balanced ledger entries, and every credit has an equal debit | FR-1 |
+| BR-2 | Opening balances are funded from a per-currency system account, which is the only account type that may go negative | OD-3, I-4 |
+| BR-3 | A transfer stays in one currency, because currency conversion is out of scope | Section 1.4 |
+| BR-4 | Only the owner of a wallet may transfer from it | FR-2.4 |
+| BR-5 | A transaction amount is between 1 and 10^12 minor units | OD-5 |
+| BR-6 | One idempotency key produces at most one outcome, including a rejection for insufficient funds | FR-2.3, OD-6 |
+| BR-7 | Committed ledger entries are never changed, and corrections are made only by reversal | FR-4 |
+| BR-8 | A transfer has at most one reversal, and it may be requested only by the source wallet's owner or an administrator | FR-4.2, Section 3.3.6 |
+| BR-9 | A reversal is rejected if the recipient no longer holds the funds | OD-8 |
+| BR-10 | Only an administrator may run reconciliation, which reports problems and never repairs them | FR-5 |
+
+## 6. Other Requirements
+
+This section contains the course-specific requirements: agent skills, testing and quality, skill evaluation, and traceability.
 
 ### 6.1 Agent Skill Requirements (SK-1 to SK-5)
 
@@ -710,7 +739,7 @@ Completed work comes from Git history. **Future owners are proposals for the tea
 
 #### 6.4.3 Traceability Matrix (SE-5)
 
-This shows the state on 2026-11-09, read from the GitHub API and Git history. The repository has **0 issues**, so every Issue cell shows "None". PR cells list merged PRs with related work, and "Impl. pending" means no implementation PR exists yet. "This SRS" means this document's PR, which is not yet open. Test IDs are planned categories unless stated otherwise.
+This matrix shows the state on 2026-11-09, taken from GitHub and the Git history. The repository has **0 issues**, so every Issue cell shows "None". PR cells list merged PRs with related work, and "Impl. pending" means that no implementation PR exists yet. PR #5 introduced this SRS. Test IDs are planned categories unless stated otherwise. Section 6.4.4 records how PR reviews were handled.
 
 | Requirement ID | GitHub Issue | PR | Test ID (TQ-*) | Skill (SK-*) | Brain Note |
 | --- | --- | --- | --- | --- | --- |
@@ -738,29 +767,75 @@ This shows the state on 2026-11-09, read from the GitHub API and Git history. Th
 | TQ-4 | None | Impl. pending | TQ-4 | SK-4, SK-5 | [[financial-api-security-and-validation]] |
 | TQ-5 | None | #1 CI. Fixture pending | TQ-5 | SK-4 | [[provider-interface-isolation]] |
 | TQ-6 | None | Impl. pending | TQ-6 | SK-4 | [[integer-minor-units-money-math]] |
-| TQ-7 | None | This SRS | TQ-7 (Stage 1 partial) | SK-1 | [[agent-skills-and-second-brain-architecture]] |
+| TQ-7 | None | #5 | TQ-7 (Stage 1 partial) | SK-1 | [[agent-skills-and-second-brain-architecture]] |
 | TQ-8 | None | Impl. pending | TQ-8 | SK-4 | [[stage1-review-retrospective]] |
 | Security Testing | None | #4 research. Impl. pending | TQ-4 | SK-4 | [[financial-api-security-and-validation]] |
-| SE-1 | None | This SRS | Not applicable | SK-3 | [[stage1-review-retrospective]] |
+| SE-1 | None | #5 | Not applicable | SK-3 | [[stage1-review-retrospective]] |
 | SE-2 | None | Stage 2 pending | Not applicable | SK-3 | [[stage1-review-retrospective]] |
 | SE-3 | None | Stage 2 pending | Not applicable | SK-3 | [[stage1-review-retrospective]] |
-| SE-4 | None | #4 outline, this SRS | Not applicable | None | [[stage1-review-retrospective]] |
-| SE-5 | None | This SRS | Not applicable | None | [[stage1-review-retrospective]] |
+| SE-4 | None | #4 outline, #5 | Not applicable | None | [[stage1-review-retrospective]] |
+| SE-5 | None | #5 | Not applicable | None | [[stage1-review-retrospective]] |
 | SE-6 | None | #2 research. Impl. pending | TQ-1, TQ-2 | SK-4 | [[provider-interface-isolation]] |
 | SE-7 | None | Impl. pending | TQ-3 | None | [[rest-api-error-handling-and-status-codes]] |
 | SB-1 | None | #1 validator | TQ-7 (Stage 1 partial) | SK-1, SK-2 | [[agent-skills-and-second-brain-architecture]] |
 | SB-2 | None | #1 draft, #4 completed | Not applicable | None | [[stage1-review-retrospective]] |
 | SB-3 | None | #1 for `brain-ingest` | TQ-7 (Stage 1 partial) | SK-1 | [[agent-skills-and-second-brain-architecture]] |
 | SB-4 | None | #1 | Not applicable | None | [[stage1-ai-session-setup]] |
-| SB-5 | None | #1 to #4 | Not applicable | None | [[stage1-review-retrospective]] |
+| SB-5 | None | #1 to #5, reviewed as described in Section 6.4.4 | Not applicable | None | [[stage1-review-retrospective]] |
 | SB-6 | None | #1 to #4 | Not applicable | None | [[stage1-review-retrospective]] |
 
 #### 6.4.4 Known Gaps Against the Course Documents
 
+**Pull request reviews: resolved retrospectively.** PRs #1 to #4 were merged on 2026-11-08 without a recorded review. The team addressed this process failure on 2026-11-09 in two ways:
+
+- Team members left manual approval comments on the closed PRs #1 to #4.
+- The team completed a formal GitHub review on the retrospective branch `fix/stage1-formal-reviews`. In PR #5, opened by Aditya Bhat, Hemakshi Jadeja approved the changes and merged them after CI passed.
+
+Going forward, `AGENTS.md` requires at least one human review before any pull request is merged.
+
 | Gap | Next action |
 | --- | --- |
 | 0 GitHub Issues | Create one issue per requirement, and update the matrix |
-| 0 recorded PR reviews on PRs #1 to #4 | Enable a required review, and review this SRS's PR |
 | TQ-7 is partial | Run the with-skill and without-skill comparison, with a human review |
 | NFR, SK and contract details are team-defined | Record the decisions in Section 2.7 as ADRs |
 | Only `/health` is implemented, without a token check | Build the features under the Section 6.4.1 plan |
+
+## Appendix A: Glossary
+
+| Term | Meaning |
+| --- | --- |
+| ACID | Atomicity, Consistency, Isolation, Durability |
+| ADR | Architecture Decision Record |
+| API | Application Programming Interface |
+| Bearer token | A credential that gives access to whoever holds it (RFC 6750) |
+| CI | Continuous Integration |
+| Credit, debit | The two sides of a ledger transaction. Wallets are treated as liabilities, so a credit increases a wallet balance and a debit decreases it |
+| Idempotency key | A client-supplied value that identifies one logical request across retries |
+| Minor unit | The smallest unit of a currency, such as a cent or paisa |
+| PARA | Projects, Areas, Resources, Archive: the structure of the Second Brain |
+| REST | Representational State Transfer, the style of the API |
+| Reversal | A new transaction that offsets an earlier one, leaving the original unchanged |
+| SRS | Software Requirements Specification |
+| System account | An internal, non-user account per currency that funds opening balances. It may have a negative balance |
+| TBD | To Be Determined |
+| TLS | Transport Layer Security |
+| ToCToU | Time-of-Check to Time-of-Use, a race where state changes between a check and its use |
+| UUID | Universally Unique Identifier |
+| WAL | Write-Ahead Logging, a SQLite journal mode |
+
+## Appendix B: Analysis Models
+
+The component diagram in Section 2.1 is the only analysis model at this stage. The UML and entity-relationship diagrams required by SE-2 are Stage 2 deliverables.
+
+## Appendix C: To Be Determined List
+
+| No. | Item to be determined | Section | To be resolved by |
+| --- | --- | --- | --- |
+| 1 | Final list of supported currencies (OD-4) | 2.7 | Stage 2 ADR |
+| 2 | Whether to allow partial reversals, or reversing a reversal (OD-9) | 2.7 | Stage 2 ADR |
+| 3 | Method for tamper evidence, with a SHA-256 hash chain recommended (OD-11) | 2.7, 4.4.3 | Stage 2 ADR |
+| 4 | Token format and lifetime (OD-13) | 2.7, 5.3 | Stage 2 ADR |
+| 5 | Full request and response schemas | 3.3 | Stage 2 OpenAPI document |
+| 6 | Maximum wait for the write lock before returning `503` | 3.3.5 | Stage 2 design |
+| 7 | Throughput and latency targets | 5.1 | Stage 3 measurements |
+| 8 | Dates for each project stage | 6.4.1 | Team |

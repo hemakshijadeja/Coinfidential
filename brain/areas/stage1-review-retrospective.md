@@ -19,7 +19,7 @@ related_requirements: [SB-1, SB-2, SB-3, SB-4, SB-5, SB-6, SE-1, SE-2, SE-3, SE-
 
 ## Summary
 
-This is the review note required by [[SB-2]], and it holds the task breakdown for [[SE-4]]. Member 1 drafted it and Member 4 completed it. Stage 1 has produced 11 research notes across all 4 members and a working CI pipeline, and the IEEE-format SRS is in `docs/SRS.md`, marked version 1.0 approved. Gaps remain: the skill evaluation is partial, and pull request reviews and GitHub Issues are still missing.
+This is the review note required by [[SB-2]], and it holds the task breakdown for [[SE-4]]. Member 1 drafted it and Member 4 completed it. Stage 1 has produced 11 research notes across all 4 members and a working CI pipeline, and the IEEE-format SRS is in `docs/SRS.md`, marked version 1.0 approved. Gaps remain: the skill evaluation is partial, GitHub Issues are still missing, and PRs #1 to #4 were reviewed only after merging.
 
 This review is based on repository evidence. The team should add its own views before submission.
 
@@ -34,14 +34,14 @@ This review is based on repository evidence. The team should add its own views b
 | Member 3 | `Subhadeep-7597` | [[idempotent-api-design-patterns]], [[immutable-audit-trail-and-reversals]], [[ledger-reconciliation-algorithms]] | |
 | Member 4 | `hardhkava` | [[financial-api-security-and-validation]], [[agent-skills-and-second-brain-architecture]] | Completed this review |
 
-That is 11 research notes against a minimum of 10, plus 1 `ai-session` note and this review. Nine are on `main`, and Member 4's two arrive with this branch.
+That is 11 research notes against a minimum of 10, plus 1 `ai-session` note and this review, all merged to `main`.
 
 ### What worked
 
 - **Research included real experiments.** Testing changed the team's conclusions: WAL alone allowed a balance of `-700`, `INSERT OR REPLACE` got past the append-only triggers, and a `-500` transfer passed reconciliation.
 - **The shared note format held up.** All four members followed the same `brain-ingest` process and schema, and the validators kept the links and frontmatter consistent.
 - **CI ran on GitHub.** The 8 most recent of 10 Actions runs all succeeded. The older 2 were not read.
-- **All work reached `main` through pull requests,** which meets [[SB-5]] for the 3 merged so far.
+- **All work reached `main` through pull requests,** which meets [[SB-5]] for all 5 merged so far.
 - **Commits stayed manual.** Git history contains no AI `Co-Authored-By` trailers.
 - **Validators were tested against bad input,** so a passing result is meaningful.
 
@@ -49,9 +49,9 @@ That is 11 research notes against a minimum of 10, plus 1 `ai-session` note and 
 
 | Problem | Evidence | Effect |
 | --- | --- | --- |
-| No recorded reviews | PRs #1, #2, #3 and #4 each show 0 reviews on GitHub | Breaks the rule of at least one review per change, and human review of AI work is unproven |
+| Late reviews | PRs #1 to #4 merged on 2026-11-08 with no review. Approval comments followed on 2026-11-09, by each PR's opener, and their pages still show "No reviews". PR #5 was formally approved by Hemakshi Jadeja before merging | The rule of a review before each merge was met only from PR #5, and the comment on PR #1 is by its own author |
 | No GitHub Issues | 0 issues exist | Work is not tracked as the rubric requires, and [[SE-5]] has nothing to trace |
-| SRS written last | The SRS was written after all research notes, and has no recorded PR review yet | The team's requirements were undefined during the research |
+| SRS written last | The SRS was written after all research notes | The team's requirements were undefined during the research |
 | Skill evaluation only partial | The evaluation has no comparison with and without the skill, and there is no `evals` folder | [[TQ-7]] is only partly met |
 | Few, large commits | Members 2 and 3 have 1 commit each, and Member 1's main commit combines CI, skills and notes | Falls short of "meaningful incremental commits" |
 | Shared files caused conflicts | `index.md` and `log.md` conflicted between member branches, needing a merge fix in `fdc009e` | Extra work, with stray blank lines left in both files |
@@ -81,10 +81,10 @@ Stage 1 ownership above is taken from Git history. **The owners below are propos
 
 | Task | Requirement | Proposed owner |
 | --- | --- | --- |
-| Review the SRS in a PR, and record its adopted decisions as ADRs | [[SE-1]], [[SE-3]] | All members |
+| Review the latest SRS changes in a PR, and record its adopted decisions as ADRs | [[SE-1]], [[SE-3]] | All members |
 | Compare `brain-ingest` with and without the skill, and record the results | [[TQ-7]] | Member 4 |
 | Create Issues, and enable branch protection | [[SE-5]] | Member 1 |
-| Retroactively review merged PRs, or record why this was not done | [[SB-5]] | All members |
+| Have another member comment on PR #1, whose only approval is from its author | [[SB-5]] | Member 2, 3 or 4 |
 | Add `ai-session` notes for Members 2, 3 and 4 | [[SB-6]] | Each member |
 | Convert plain-text links to wikilinks | [[SB-1]] | Member 3 |
 | Open the vault in Obsidian and confirm it works | [[SB-1]] | Member 4 |
@@ -119,15 +119,15 @@ Stage 1 status on 2026-11-09, checked against `SDLC_and_Workflow.pdf`:
 
 | Deliverable | Status |
 | --- | --- |
-| SRS with FR, NFR and SK ([[SE-1]]) | Written in `docs/SRS.md` in IEEE format, marked version 1.0 approved, with **no PR review recorded yet** |
+| SRS with FR, NFR and SK ([[SE-1]]) | Written in `docs/SRS.md` in IEEE format, marked version 1.0 approved, and formally reviewed in PR #5. Later edits need their own PR |
 | Brain with PARA folders, index and log | Folders, index and log are done. Use in Obsidian is unconfirmed |
-| `brain-ingest` used for at least 10 research notes | **Met** once this branch merges: 11 |
+| `brain-ingest` used for at least 10 research notes | **Met**: 11 |
 | `AGENTS.md` ([[SB-4]]) | Done |
 | Repository and CI skeleton | Done, and running on GitHub |
-| Every member authors notes ([[SB-6]]) | 3 members in `main`, and Member 4 once this branch merges |
+| Every member authors notes ([[SB-6]]) | Met: all 4 members in `main` |
 | Skill evaluations ([[TQ-7]]) | **Partial**: audit recorded in SRS Section 6.3, with no comparison run yet |
 | Every skill cites a distilled note ([[SB-3]]) | Done for `brain-ingest`, but not enforced |
-| Pull requests with reviews | **Not met**: 0 reviews on 4 PRs |
+| Pull requests with reviews | **Partly met**: formal review on PR #5, and only retrospective comments on PRs #1 to #4 |
 | GitHub Issues for all work | **Not met**: 0 issues |
 
 The research also left design decisions open, which should become ADRs: how wallets receive their first funds, authentication, the treatment of insufficient funds under idempotency, and how to handle a reversal after the recipient has spent the money.
@@ -153,7 +153,6 @@ The research notes from all four members are linked in the table under **What wa
 ## Open questions
 
 - Do the other members agree with this assessment and the proposed owners? This review comes from repository evidence, not from a team discussion.
-- Were PRs reviewed outside GitHub's review feature? The API shows none recorded, so any informal reviews should be noted here.
 - What is the Stage 1 deadline? It decides whether the SRS and evaluations come before anything else.
 - Does a note satisfy [[SE-4]], or do reviewers expect a separate development plan with dates? No dates are set here because none are in the course documents.
-- Is branch protection already on? The public API does not show it without authentication, but the merges with no reviews suggest that a required review is not enforced.
+- Is branch protection on? It could not be checked without authentication, and PRs #1 to #4 merged with no review, so it should be confirmed.
