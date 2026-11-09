@@ -20,10 +20,11 @@ REQUIRED_IDS = (
 SERIES_LIMITS = {"FR": 5, "NFR": 8, "SK": 5, "TQ": 8, "SE": 7, "SB": 6}
 # The team's IEEE outline.
 OUTLINE = [
+    "## Revision History",
     "## 1. Introduction",
     "### 1.1 Purpose",
     "### 1.2 Document Conventions",
-    "### 1.3 Intended Audience",
+    "### 1.3 Intended Audience and Reading Suggestions",
     "### 1.4 Product Scope",
     "### 1.5 References",
     "## 2. Overall Description",
@@ -50,11 +51,15 @@ OUTLINE = [
     "### 5.2 Safety Requirements",
     "### 5.3 Security Requirements",
     "### 5.4 Software Quality Attributes",
-    "## 6. Other Requirements (Course Specifics)",
+    "### 5.5 Business Rules",
+    "## 6. Other Requirements",
     "### 6.1 Agent Skill Requirements (SK-1 to SK-5)",
     "### 6.2 Testing and Quality (TQ-1 to TQ-8)",
     "### 6.3 Stage 1 Skill Evaluation (TQ-7)",
     "### 6.4 Traceability Matrix and Task Breakdown (SE-4, SE-5)",
+    "## Appendix A: Glossary",
+    "## Appendix B: Analysis Models",
+    "## Appendix C: To Be Determined List",
 ]
 
 
@@ -85,7 +90,9 @@ def test_outline_matches_the_ieee_structure(srs_text: str) -> None:
 def test_cover_page_has_title_version_and_authors(srs_text: str) -> None:
     cover = srs_text.split("## 1. Introduction", 1)[0]
 
-    assert cover.startswith("# Coinfidential: Software Requirements Specification")
+    assert cover.startswith("# Software Requirements Specification for Coinfidential")
+    assert "Coinfidential Team" in cover
+    assert "November 9, 2026" in cover
     assert "Version 1.0 approved" in cover
     for author in (
         "Aditya Bhat (BT2024035)",
@@ -94,6 +101,7 @@ def test_cover_page_has_title_version_and_authors(srs_text: str) -> None:
         "Hardh Kava (BT2024041)",
     ):
         assert author in cover
+    assert cover.index("Prepared by") < cover.index("hemakshijadeja/Coinfidential")
 
 
 def test_references_link_the_repository(srs_text: str) -> None:

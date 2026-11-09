@@ -68,3 +68,19 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Changes: moved design detail to the research notes and Stage 2, marked extra reconciliation checks as recommended, added Section 2.6 and the repository link
 - Requirements linked: [[SE-1]], [[SE-7]], [[FR-4]], [[FR-5]]
 
+## [2026-11-09] srs | SRS polished for submission, and PR review record corrected
+
+- Source: The [SRS](../docs/SRS.md), and the public GitHub pages for PRs #1 to #5
+- Notes added: none
+- Notes updated: [[stage1-review-retrospective]]
+- Changes: added the repository link to the cover and Section 5.5 Business Rules, standardized terminology, and recorded the formal review in PR #5 and the retrospective comments on PRs #1 to #4
+- Requirements linked: [[SE-1]], [[SE-5]], [[SB-5]]
+
+## [2026-11-09] srs | SRS aligned with the course's SRS template
+
+- Source: `srs_template-ieee.pdf` (Karl E. Wiegers' template) and the [SRS](../docs/SRS.md)
+- Notes added: none
+- Notes updated: none
+- Changes: updated the cover to the template's layout and fields, added Revision History and Appendices A to C, moved the glossary to Appendix A, and retitled Section 1.3
+- Requirements linked: [[SE-1]]
+

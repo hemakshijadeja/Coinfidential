@@ -15,7 +15,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER
+from reportlab.lib.enums import TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
@@ -58,9 +58,10 @@ LINE_BREAK = "\x01"
 BODY = ParagraphStyle("Body", fontName="Helvetica", fontSize=9.5, leading=13.5, spaceAfter=6)
 STYLES = {
     "body": BODY,
-    "title": ParagraphStyle("Title", parent=BODY, fontName="Helvetica-Bold", fontSize=26, leading=32, textColor=NAVY, alignment=TA_CENTER, spaceAfter=14),
-    "cover": ParagraphStyle("Cover", parent=BODY, fontSize=13, leading=20, textColor=GREY, alignment=TA_CENTER, spaceAfter=10),
-    "h2": ParagraphStyle("H2", parent=BODY, fontName="Helvetica-Bold", fontSize=17, leading=22, textColor=NAVY, spaceAfter=10, keepWithNext=1),
+    "title": ParagraphStyle("Title", parent=BODY, fontName="Helvetica-Bold", fontSize=30, leading=36, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=14),
+    "cover_for": ParagraphStyle("CoverFor", parent=BODY, fontName="Helvetica-Bold", fontSize=16, leading=22, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=14),
+    "cover": ParagraphStyle("Cover", parent=BODY, fontName="Helvetica-Bold", fontSize=12, leading=18, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=16),
+    "h2": ParagraphStyle("H2", parent=BODY, fontName="Helvetica-Bold", fontSize=17, leading=22, textColor=NAVY, spaceBefore=14, spaceAfter=10, keepWithNext=1),
     "h3": ParagraphStyle("H3", parent=BODY, fontName="Helvetica-Bold", fontSize=12.5, leading=16, textColor=NAVY, spaceBefore=10, spaceAfter=6, keepWithNext=1),
     "h4": ParagraphStyle("H4", parent=BODY, fontName="Helvetica-Bold", fontSize=10, leading=13, textColor=GREY, spaceBefore=7, spaceAfter=3, keepWithNext=1),
     "cell": ParagraphStyle("Cell", parent=BODY, fontSize=7.8, leading=10, spaceAfter=0),
@@ -254,8 +255,8 @@ class SrsDocument(BaseDocTemplate):
         canvas.saveState()
         canvas.setFont("Helvetica", 8)
         canvas.setFillColor(GREY)
-        canvas.drawString(MARGIN, A4[1] - 12 * mm, "Coinfidential: Software Requirements Specification")
-        canvas.drawRightString(A4[0] - MARGIN, 10 * mm, f"Page {document.page}")
+        canvas.drawString(MARGIN, A4[1] - 12 * mm, document.title)
+        canvas.drawRightString(A4[0] - MARGIN, A4[1] - 12 * mm, f"Page {document.page}")
         canvas.setStrokeColor(RULE)
         canvas.setLineWidth(0.5)
         canvas.line(MARGIN, A4[1] - 14 * mm, A4[0] - MARGIN, A4[1] - 14 * mm)
@@ -313,7 +314,8 @@ def build_body(lines: list[str]) -> tuple[str, list, list]:
                 title = text
             else:
                 if level == 2:
-                    if current is sections and sections:
+                    # As in the template, the last two short appendices share a page.
+                    if current is sections and sections and not text.startswith(("Appendix B", "Appendix C")):
                         sections.append(PageBreak())
                     current = sections
                 current.append(Paragraph(format_inline(text), STYLES[f"h{level}"]))
@@ -358,6 +360,18 @@ def check_characters(markdown: str) -> None:
             raise ValueError(f"Line {line_number} has a character the PDF fonts cannot show: {line[error.start]!r}") from error
 
 
+def build_cover_title(title: str) -> list[Paragraph]:
+    """Lay out 'X for Y' on three lines, as the SRS template's cover does."""
+    subject, separator, project = title.partition(" for ")
+    if not separator:
+        return [Paragraph(format_inline(title), STYLES["title"])]
+    return [
+        Paragraph(format_inline(subject), STYLES["title"]),
+        Paragraph("for", STYLES["cover_for"]),
+        Paragraph(format_inline(project), STYLES["title"]),
+    ]
+
+
 def build_pdf(input_path: Path = DEFAULT_INPUT, output_path: Path = DEFAULT_OUTPUT) -> Path:
     markdown = input_path.read_text(encoding="utf-8")
     check_characters(markdown)
@@ -368,15 +382,16 @@ def build_pdf(input_path: Path = DEFAULT_INPUT, output_path: Path = DEFAULT_OUTP
     contents.dotsMinLevel = 0
 
     story = [
-        Spacer(1, 45 * mm),
-        Paragraph(format_inline(title), STYLES["title"]),
-        HRFlowable(width="40%", thickness=1.5, color=BLUE, spaceBefore=4, spaceAfter=22),
+        Spacer(1, 22 * mm),
+        HRFlowable(width="100%", thickness=4, color=NAVY, spaceAfter=28),
+        *build_cover_title(title),
+        Spacer(1, 12 * mm),
         *front_matter,
         NextPageTemplate("content"),
         PageBreak(),
         Paragraph("Contents", STYLES["toc_title"]),
         contents,
-        PageBreak(),
+        Spacer(1, 8 * mm),
         *sections,
     ]
     document = SrsDocument(str(output_path), title)
