@@ -47,7 +47,7 @@ Agents use **progressive disclosure**, which keeps many skills available at a sm
 
 ### Our skills
 
-The IDs below are a **proposed mapping**. `SK-1` to `SK-5` are not defined in the course PDFs or this repository, because the SRS that should define them under [[SE-1]] does not exist yet.
+The course PDFs do not define `SK-1` to `SK-5`. The team's SRS (`docs/SRS.md`, under [[SE-1]]) now defines them with the mapping below, which the team still needs to confirm in its review.
 
 | Proposed ID | Skill | Purpose, from the course documents | Due | Status |
 | --- | --- | --- | --- | --- |
@@ -79,7 +79,7 @@ The rules that apply to the brain and skills:
 | [[SB-2]]: review note at the end of each stage | [[stage1-review-retrospective]] |
 | [[SB-3]]: every skill and ADR cites a distilled note | `brain-ingest` cites two notes, but no check enforces this |
 | [[SB-5]]: brain changes go through pull requests | Done for all 3 merged PRs |
-| [[TQ-7]]: skill evaluations before each stage submission | **Not started** |
+| [[TQ-7]]: skill evaluations before each stage submission | **Partial**: SRS Section 6.3 records an audit, with no comparison run yet |
 
 ### Validation
 
@@ -111,9 +111,9 @@ These are my recommendations and inferences:
 
 ## Requirements
 
-- [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]]: The five skills, using the proposed mapping above.
+- [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]]: The five skills, using the mapping above.
 - [[SB-1]], [[SB-2]], [[SB-3]], [[SB-5]]: The rules that the brain and skills must follow.
-- [[SE-1]]: The SRS must define the SK requirements.
+- [[SE-1]]: The SRS defines the SK requirements.
 - [[TQ-7]]: Skill evaluations must run before each stage submission.
 - [[FR-1]], [[FR-5]]: The range of functional requirements that `simulate-transfer` depends on.
 
@@ -128,7 +128,7 @@ These are my recommendations and inferences:
 
 ## Open questions
 
-- Do `SK-1` to `SK-5` match this mapping? The SRS must define them, and the validator accepts any numbered `SK` ID, so it cannot confirm their meaning.
+- Does the team agree with this `SK-1` to `SK-5` mapping in the SRS? The validator accepts any numbered `SK` ID, so it cannot confirm their meaning.
 - The source named "How I Built My Second Brain with Obsidian + Claude Code" is listed in the course PDF as the basis for these skills, but it returned `403 Forbidden` when fetched, so I have not read it. A member should read it before building `brain-refine` and `brain-query`.
 - Should CI also run `skills-ref`? It would track the official rules, but the version would need pinning, and it is at an early version.
 - Where should evaluation results go? [[TQ-7]] says the test documentation, which does not exist yet.

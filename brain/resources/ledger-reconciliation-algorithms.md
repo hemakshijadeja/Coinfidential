@@ -138,7 +138,7 @@ Member 2's `race-conditions-and-optimistic-locking` note covers the same lost-up
 
 ## Open questions
 
-- Who may call this endpoint? [[FR-5]] says "administrative", but the brief defines no authentication, so the team needs a decision.
+- Decided in the SRS: this endpoint requires a Bearer token with the `admin` role, because [[FR-5]] says "administrative" and the brief defines no authentication.
 - Should the per-transaction and unknown-wallet checks be part of the [[FR-5]] response? They go beyond its wording, but they caught faults that its two checks missed.
 - Should it scan the entire ledger every time? A full scan is simple and took seconds here, but stored checkpoints may be needed at a much larger scale.
 - These timings are from one Windows machine with simple test data, so they are not a benchmark.

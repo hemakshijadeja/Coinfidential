@@ -44,6 +44,24 @@ python scripts/validate_skills.py
 python scripts/validate_brain.py
 ```
 
+## Build the SRS PDF
+
+```
+python scripts/generate_srs_pdf.py
+```
+
+This writes `SRS_Stage1_Submission.pdf` to the repository root. It is ignored by Git, so upload it to the submission portal directly.
+
+## Evaluate the brain-ingest skill
+
+```
+python scripts/evaluate_brain_ingest.py
+```
+
+The results are recorded in Section 6.3 of the SRS.
+
+Detailed design, such as SQL and exact API schemas, belongs in the Stage 2 design documents. The SRS states the requirements.
+
 ## Repository layout
 
 | Path | Contents |
@@ -51,6 +69,7 @@ python scripts/validate_brain.py
 | `app/` | FastAPI application |
 | `tests/` | Test suite |
 | `scripts/` | CI validation scripts |
+| `docs/` | Software Requirements Specification (`SRS.md`) |
 | `brain/` | Second Brain project notes, organized with PARA |
 | `.claude/skills/` | Agent Skills |
 | `AGENTS.md` | Project rules for contributors and AI agents |
