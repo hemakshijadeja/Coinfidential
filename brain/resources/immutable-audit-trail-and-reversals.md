@@ -123,4 +123,4 @@ Member 2's `provider-interface-isolation` note covers the connection code where 
 - Should reversals of reversals be blocked? Blocking needs a check that the target entry has no `reverses` value.
 - Are partial reversals needed? `UNIQUE(reverses)` allows only one reversal per entry, so it would prevent them.
 - Does the rubric expect a hash chain? The brief says "tamper-evident", but no FR or TQ mentions one, so the team should confirm.
-- Who is allowed to request a reversal? The brief does not say.
+- Adopted in the SRS: the owner of the original source wallet, or an admin, may request a reversal. The brief does not say, so this needs an ADR.

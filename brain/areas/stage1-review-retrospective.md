@@ -19,7 +19,7 @@ related_requirements: [SB-1, SB-2, SB-3, SB-4, SB-5, SB-6, SE-1, SE-2, SE-3, SE-
 
 ## Summary
 
-This is the review note required by [[SB-2]], and it holds the task breakdown for [[SE-4]]. Member 1 drafted it and Member 4 completed it. Stage 1 has produced 11 research notes across all 4 members and a working CI pipeline, but it is **not yet ready to submit**: the SRS, skill evaluations, pull request reviews and GitHub Issues are all still missing.
+This is the review note required by [[SB-2]], and it holds the task breakdown for [[SE-4]]. Member 1 drafted it and Member 4 completed it. Stage 1 has produced 11 research notes across all 4 members and a working CI pipeline, and the IEEE-format SRS is in `docs/SRS.md`, marked version 1.0 approved. Gaps remain: the skill evaluation is partial, and pull request reviews and GitHub Issues are still missing.
 
 This review is based on repository evidence. The team should add its own views before submission.
 
@@ -49,10 +49,10 @@ That is 11 research notes against a minimum of 10, plus 1 `ai-session` note and 
 
 | Problem | Evidence | Effect |
 | --- | --- | --- |
-| No recorded reviews | PRs #1, #2 and #3 each show 0 reviews on GitHub | Breaks the rule of at least one review per change, and human review of AI work is unproven |
+| No recorded reviews | PRs #1, #2, #3 and #4 each show 0 reviews on GitHub | Breaks the rule of at least one review per change, and human review of AI work is unproven |
 | No GitHub Issues | 0 issues exist | Work is not tracked as the rubric requires, and [[SE-5]] has nothing to trace |
-| SRS not started | No SRS in the repository | The main Stage 1 deliverable is missing, and `SK-1` to `SK-5` are undefined |
-| Skills not evaluated | No `evals` folder | [[TQ-7]] is unmet |
+| SRS written last | The SRS was written after all research notes, and has no recorded PR review yet | The team's requirements were undefined during the research |
+| Skill evaluation only partial | The evaluation has no comparison with and without the skill, and there is no `evals` folder | [[TQ-7]] is only partly met |
 | Few, large commits | Members 2 and 3 have 1 commit each, and Member 1's main commit combines CI, skills and notes | Falls short of "meaningful incremental commits" |
 | Shared files caused conflicts | `index.md` and `log.md` conflicted between member branches, needing a merge fix in `fdc009e` | Extra work, with stray blank lines left in both files |
 | Parallel branches blocked links | Member 3 could not link Member 2's unmerged notes | 3 plain-text mentions still need converting under [[SB-1]] |
@@ -81,10 +81,8 @@ Stage 1 ownership above is taken from Git history. **The owners below are propos
 
 | Task | Requirement | Proposed owner |
 | --- | --- | --- |
-| Write the SRS: FR and NFR sections | [[SE-1]] | Member 1 |
-| Write the SRS: define SK requirements | [[SE-1]], [[SK-1]] | Member 4 |
-| Review the SRS, covering concurrency and ledger rules | [[SE-1]] | Members 2 and 3 |
-| Evaluate `brain-ingest` and record the results | [[TQ-7]] | Member 4 |
+| Review the SRS in a PR, and record its adopted decisions as ADRs | [[SE-1]], [[SE-3]] | All members |
+| Compare `brain-ingest` with and without the skill, and record the results | [[TQ-7]] | Member 4 |
 | Create Issues, and enable branch protection | [[SE-5]] | Member 1 |
 | Retroactively review merged PRs, or record why this was not done | [[SB-5]] | All members |
 | Add `ai-session` notes for Members 2, 3 and 4 | [[SB-6]] | Each member |
@@ -121,15 +119,15 @@ Stage 1 status on 2026-11-09, checked against `SDLC_and_Workflow.pdf`:
 
 | Deliverable | Status |
 | --- | --- |
-| SRS with FR, NFR and SK ([[SE-1]]) | **Not started** |
+| SRS with FR, NFR and SK ([[SE-1]]) | Written in `docs/SRS.md` in IEEE format, marked version 1.0 approved, with **no PR review recorded yet** |
 | Brain with PARA folders, index and log | Folders, index and log are done. Use in Obsidian is unconfirmed |
 | `brain-ingest` used for at least 10 research notes | **Met** once this branch merges: 11 |
 | `AGENTS.md` ([[SB-4]]) | Done |
 | Repository and CI skeleton | Done, and running on GitHub |
 | Every member authors notes ([[SB-6]]) | 3 members in `main`, and Member 4 once this branch merges |
-| Skill evaluations ([[TQ-7]]) | **Not started** |
+| Skill evaluations ([[TQ-7]]) | **Partial**: audit recorded in SRS Section 6.3, with no comparison run yet |
 | Every skill cites a distilled note ([[SB-3]]) | Done for `brain-ingest`, but not enforced |
-| Pull requests with reviews | **Not met**: 0 reviews on 3 PRs |
+| Pull requests with reviews | **Not met**: 0 reviews on 4 PRs |
 | GitHub Issues for all work | **Not met**: 0 issues |
 
 The research also left design decisions open, which should become ADRs: how wallets receive their first funds, authentication, the treatment of insufficient funds under idempotency, and how to handle a reversal after the recipient has spent the money.
@@ -140,7 +138,7 @@ The research also left design decisions open, which should become ADRs: how wall
 - [[SE-4]]: This note holds the task breakdown and an outline plan by stage.
 - [[SE-1]], [[SE-2]], [[SE-3]], [[SE-5]]: Engineering documents in the plan.
 - [[SB-1]], [[SB-3]], [[SB-4]], [[SB-5]], [[SB-6]]: Second Brain rules assessed in this review.
-- [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]]: The skills in the plan, using the proposed mapping in [[agent-skills-and-second-brain-architecture]].
+- [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]]: The skills in the plan, defined in the SRS and described in [[agent-skills-and-second-brain-architecture]].
 - [[TQ-7]]: Skill evaluations are outstanding.
 - [[FR-1]], [[FR-5]]: The range of functional requirements that later stages must demonstrate.
 

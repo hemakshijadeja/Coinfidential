@@ -10,7 +10,7 @@ source:
   - "Financial_Ledger.pdf, pp. 1-2 (project statement)"
   - "Accounting for Developers, Countingup Engineering: https://engineering.countingup.com/accounting-for-developers/"
   - "How Not to Build a Ledger, Clément Salaün, Formance: https://dev.to/formance/how-not-to-build-a-ledger-cfg"
-related_requirements: [FR-1, FR-2, FR-3, FR-4, FR-5]
+related_requirements: [FR-1, FR-2, FR-3, FR-4, FR-5, SE-3]
 ---
 
 # Double-Entry Bookkeeping Principles

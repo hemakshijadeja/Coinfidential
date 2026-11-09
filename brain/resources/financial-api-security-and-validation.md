@@ -152,8 +152,8 @@ The brief's Security Testing requirement has no ID, so this note refers to it by
 
 ## Open questions
 
-- Who may call each endpoint? The brief defines no authentication, so [[TQ-4]] does not currently cover authorization. This is the largest open security question.
-- What is the maximum transfer amount? `10**12` was only a test value.
+- Decided in the SRS: all REST endpoints require `Authorization: Bearer <token>`. How tokens are issued is still only an adopted default that needs an ADR, and [[TQ-4]] itself does not name authorization, so the SRS adds those test cases.
+- Decided in the SRS: the maximum amount is `10**12` minor units per transaction. It began as a test value and is not derived from any requirement.
 - Should duplicate JSON keys be rejected? Standard parsing silently uses the last value, and a stricter parser would be needed to detect them.
 - Should IDs be restricted to `UUID4`? This assumes that the server generates them.
 - These are the behaviors of one set of pinned versions, so the tests need to confirm them after any upgrade.

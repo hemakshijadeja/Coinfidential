@@ -43,3 +43,28 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Notes updated: [[index]], [[stage1-review-retrospective]]
 - Requirements linked: [[TQ-1]], [[TQ-4]], [[TQ-6]], [[TQ-7]], [[FR-1]], [[FR-2]], [[FR-5]], [[SK-1]], [[SK-2]], [[SK-3]], [[SK-4]], [[SK-5]], [[SB-1]], [[SB-2]], [[SB-3]], [[SB-4]], [[SB-5]], [[SB-6]], [[SE-1]], [[SE-2]], [[SE-3]], [[SE-4]], [[SE-5]]
 
+## [2026-11-09] srs | Stage 1 SRS and brain-ingest skill evaluation
+
+- Source: Financial_Ledger.pdf, SDLC_and_Workflow.pdf, all research notes, Git history, GitHub public API and `scripts/evaluate_brain_ingest.py`
+- Document added: [SRS](../docs/SRS.md), which also defines NFR-1 to NFR-8 and SK-1 to SK-5
+- Notes added: none
+- Notes updated: [[index]], [[stage1-review-retrospective]], [[agent-skills-and-second-brain-architecture]], [[double-entry-bookkeeping-principles]]
+- Evaluation: first run 131/132 assertions, with SE-3 missing from the frontmatter of [[double-entry-bookkeeping-principles]]. Second run 132/132 after the fix. Verdict: partial, because no comparison with and without the skill has been run
+- Requirements linked: [[SE-1]], [[SE-4]], [[SE-5]], [[TQ-7]], [[SK-1]]
+
+## [2026-11-09] srs | SRS restructured to IEEE format, authentication and amount limit decided
+
+- Source: The team's IEEE outline, the existing [SRS](../docs/SRS.md) and RFC 6750
+- Notes added: none
+- Notes updated: [[stage1-review-retrospective]], [[agent-skills-and-second-brain-architecture]], [[financial-api-security-and-validation]], [[ledger-reconciliation-algorithms]], [[immutable-audit-trail-and-reversals]]
+- Decisions closed: `Authorization: Bearer <token>` required on all REST endpoints, and an amount limit of 10^12 minor units per transaction
+- Requirements linked: [[SE-1]], [[NFR-5]], [[FR-5]]
+
+## [2026-11-09] srs | SRS trimmed to requirements, and team names added
+
+- Source: Team review of the [SRS](../docs/SRS.md) for length and restrictiveness
+- Notes added: none
+- Notes updated: none
+- Changes: moved design detail to the research notes and Stage 2, marked extra reconciliation checks as recommended, added Section 2.6 and the repository link
+- Requirements linked: [[SE-1]], [[SE-7]], [[FR-4]], [[FR-5]]
+
