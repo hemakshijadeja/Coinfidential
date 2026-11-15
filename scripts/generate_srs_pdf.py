@@ -1,8 +1,13 @@
 """Convert docs/SRS.md into SRS_Stage1_Submission.pdf at the repository root.
 
 Supports the Markdown that the SRS uses: headings, paragraphs, nested lists,
-tables, fenced code blocks, horizontal rules, and inline code, bold, links and
-[[wikilinks]]. Text outside this subset is rendered as plain paragraphs.
+tables, fenced code blocks, horizontal rules, figures, and inline code, bold,
+links and [[wikilinks]]. Text outside this subset is rendered as plain
+paragraphs.
+
+A figure is a line such as `![Figure 1: Caption](diagrams/use-case.svg)`. The
+file name selects a drawing in srs_diagrams.py, which is embedded in the PDF as
+a vector image and also saved as the SVG file that GitHub shows.
 
 The built-in PDF fonts cover only Latin text, so a character they cannot show
 stops the build instead of printing as a black box.
@@ -14,8 +19,9 @@ import textwrap
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+from reportlab.graphics import renderSVG
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_RIGHT
+from reportlab.lib.enums import TA_CENTER, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
@@ -36,9 +42,15 @@ from reportlab.platypus import (
 )
 from reportlab.platypus.tableofcontents import TableOfContents
 
+try:  # Imported as part of the scripts package, as the tests do.
+    from scripts.srs_diagrams import DIAGRAMS
+except ModuleNotFoundError:  # Run directly as python scripts/generate_srs_pdf.py.
+    from srs_diagrams import DIAGRAMS
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT = ROOT / "docs" / "SRS.md"
 DEFAULT_OUTPUT = ROOT / "SRS_Stage1_Submission.pdf"
+DIAGRAM_DIR = ROOT / "docs" / "diagrams"
 
 MARGIN = 18 * mm
 CONTENT_WIDTH = A4[0] - 2 * MARGIN
@@ -51,21 +63,23 @@ CODE_COLOR = "#8A2B4F"
 CODE_LINE_LENGTH = 96
 KEEP_TOGETHER_LINES = 30
 CELL_FONT_SIZE = 7.8
+CODE_CELL_FONT_SIZE = 7.2
 CELL_PADDING = 4
 MAX_WORD_COLUMN_SHARE = 0.3
 LINE_BREAK = "\x01"
 
-BODY = ParagraphStyle("Body", fontName="Helvetica", fontSize=9.5, leading=13.5, spaceAfter=6)
+BODY = ParagraphStyle("Body", fontName="Helvetica", fontSize=9.3, leading=12.6, spaceAfter=5)
 STYLES = {
     "body": BODY,
     "title": ParagraphStyle("Title", parent=BODY, fontName="Helvetica-Bold", fontSize=30, leading=36, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=14),
     "cover_for": ParagraphStyle("CoverFor", parent=BODY, fontName="Helvetica-Bold", fontSize=16, leading=22, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=14),
     "cover": ParagraphStyle("Cover", parent=BODY, fontName="Helvetica-Bold", fontSize=12, leading=18, textColor=NAVY, alignment=TA_RIGHT, spaceAfter=16),
-    "h2": ParagraphStyle("H2", parent=BODY, fontName="Helvetica-Bold", fontSize=17, leading=22, textColor=NAVY, spaceBefore=14, spaceAfter=10, keepWithNext=1),
-    "h3": ParagraphStyle("H3", parent=BODY, fontName="Helvetica-Bold", fontSize=12.5, leading=16, textColor=NAVY, spaceBefore=10, spaceAfter=6, keepWithNext=1),
-    "h4": ParagraphStyle("H4", parent=BODY, fontName="Helvetica-Bold", fontSize=10, leading=13, textColor=GREY, spaceBefore=7, spaceAfter=3, keepWithNext=1),
-    "cell": ParagraphStyle("Cell", parent=BODY, fontSize=7.8, leading=10, spaceAfter=0),
-    "header": ParagraphStyle("Header", parent=BODY, fontName="Helvetica-Bold", fontSize=7.8, leading=10, textColor=colors.white, spaceAfter=0),
+    "h2": ParagraphStyle("H2", parent=BODY, fontName="Helvetica-Bold", fontSize=17, leading=22, textColor=NAVY, spaceBefore=12, spaceAfter=8, keepWithNext=1),
+    "h3": ParagraphStyle("H3", parent=BODY, fontName="Helvetica-Bold", fontSize=12, leading=15, textColor=NAVY, spaceBefore=8, spaceAfter=5, keepWithNext=1),
+    "h4": ParagraphStyle("H4", parent=BODY, fontName="Helvetica-Bold", fontSize=10, leading=13, textColor=GREY, spaceBefore=6, spaceAfter=3, keepWithNext=1),
+    "cell": ParagraphStyle("Cell", parent=BODY, fontSize=7.8, leading=9.6, spaceAfter=0),
+    "header": ParagraphStyle("Header", parent=BODY, fontName="Helvetica-Bold", fontSize=7.8, leading=9.6, textColor=colors.white, spaceAfter=0),
+    "caption": ParagraphStyle("Caption", parent=BODY, fontName="Helvetica-Oblique", fontSize=8.5, leading=11, textColor=GREY, alignment=TA_CENTER, spaceBefore=4, spaceAfter=10),
     "code": ParagraphStyle("Code", fontName="Courier", fontSize=7.8, leading=10, backColor=LIGHT, borderPadding=5, spaceBefore=6, spaceAfter=10, leftIndent=5, rightIndent=5),
     "toc_title": ParagraphStyle("TocTitle", parent=BODY, fontName="Helvetica-Bold", fontSize=17, leading=22, textColor=NAVY, spaceAfter=12),
     "toc0": ParagraphStyle("Toc0", parent=BODY, fontName="Helvetica-Bold", fontSize=10, leading=15, spaceBefore=5, spaceAfter=0),
@@ -78,6 +92,7 @@ LINK = re.compile(r"\[([^\]\[]+)\]\((https?://[^)\s]+|[^)\s]+)\)")
 WIKILINK = re.compile(r"\[\[([^\]\n]+)\]\]")
 HEADING = re.compile(r"(#{1,4})\s+(.*)")
 LIST_ITEM = re.compile(r"(\s*)([-*]|\d+\.)\s+(.*)")
+FIGURE = re.compile(r"!\[([^\]]+)\]\(([^)\s]+)\)")
 TABLE_DIVIDER = re.compile(r"\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?\s*")
 NUMBERED = re.compile(r"\d+\.")
 
@@ -114,9 +129,11 @@ def text_width(text: str, font: str = "Helvetica-Bold") -> float:
 
 def longest_word_width(cell: str) -> float:
     """Return the width of the longest piece of a cell that cannot wrap."""
+    # Code is printed in a wider monospace font, so measure it in that font.
+    code_widths = [stringWidth(word, "Courier", CODE_CELL_FONT_SIZE) for span in CODE_SPAN.findall(cell) for word in span.split()]
     # Wikilinks can wrap at their hyphens, so only their parts have to fit.
-    plain = WIKILINK.sub(lambda m: m.group(1).replace("-", " "), cell).replace("`", "").replace("*", "")
-    return max((text_width(word) for word in plain.split()), default=0.0)
+    plain = WIKILINK.sub(lambda m: m.group(1).replace("-", " "), CODE_SPAN.sub(" ", cell)).replace("*", "")
+    return max([*(text_width(word) for word in plain.split()), *code_widths], default=0.0)
 
 
 def column_widths(rows: list[list[str]]) -> list[float]:
@@ -179,7 +196,7 @@ def build_table(rows: list[list[str]]) -> Table:
             cells = [cell.replace("`", "") for cell in cells]
         data.append(
             [
-                Paragraph(format_inline(wrap_wikilinks(cell, width), code_size=7.2).replace(LINE_BREAK, "<br/>"), style)
+                Paragraph(format_inline(wrap_wikilinks(cell, width), code_size=CODE_CELL_FONT_SIZE).replace(LINE_BREAK, "<br/>"), style)
                 for cell, width in zip(cells, widths, strict=True)
             ]
         )
@@ -193,8 +210,8 @@ def build_table(rows: list[list[str]]) -> Table:
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 4),
                 ("RIGHTPADDING", (0, 0), (-1, -1), 4),
-                ("TOPPADDING", (0, 0), (-1, -1), 3),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+                ("TOPPADDING", (0, 0), (-1, -1), 2.5),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2.5),
             ]
         )
     )
@@ -314,8 +331,8 @@ def build_body(lines: list[str]) -> tuple[str, list, list]:
                 title = text
             else:
                 if level == 2:
-                    # As in the template, the last two short appendices share a page.
-                    if current is sections and sections and not text.startswith(("Appendix B", "Appendix C")):
+                    # As in the template, sections run on, and only the body starts a new page.
+                    if current is sections and sections and text.startswith("1. "):
                         sections.append(PageBreak())
                     current = sections
                 current.append(Paragraph(format_inline(text), STYLES[f"h{level}"]))
@@ -329,6 +346,12 @@ def build_body(lines: list[str]) -> tuple[str, list, list]:
                 rows.append(split_table_row(lines[position]))
                 position += 1
             current.append(build_table(rows))
+            continue
+
+        figure = FIGURE.fullmatch(stripped)
+        if figure:
+            current.append(build_figure(figure.group(1), figure.group(2)))
+            position += 1
             continue
 
         if stripped in ("---", "***"):
@@ -372,6 +395,31 @@ def build_cover_title(title: str) -> list[Paragraph]:
     ]
 
 
+def build_figure(caption: str, image_path: str) -> KeepTogether:
+    """Embed the drawing named by the image file, with its caption below it."""
+    name = Path(image_path).stem
+    if name not in DIAGRAMS:
+        raise ValueError(f"No drawing named {name!r} in srs_diagrams.py for figure {caption!r}")
+    drawing = DIAGRAMS[name]()
+    if drawing.width > CONTENT_WIDTH:
+        factor = CONTENT_WIDTH / drawing.width
+        drawing.scale(factor, factor)
+        drawing.width, drawing.height = drawing.width * factor, drawing.height * factor
+    drawing.hAlign = "CENTER"
+    return KeepTogether([Spacer(1, 4), drawing, Paragraph(format_inline(caption), STYLES["caption"])])
+
+
+def write_diagrams(directory: Path = DIAGRAM_DIR) -> list[Path]:
+    """Save every drawing as an SVG file for the Markdown version of the SRS."""
+    directory.mkdir(parents=True, exist_ok=True)
+    paths = []
+    for name, build in DIAGRAMS.items():
+        path = directory / f"{name}.svg"
+        renderSVG.drawToFile(build(), str(path))
+        paths.append(path)
+    return paths
+
+
 def build_pdf(input_path: Path = DEFAULT_INPUT, output_path: Path = DEFAULT_OUTPUT) -> Path:
     markdown = input_path.read_text(encoding="utf-8")
     check_characters(markdown)
@@ -400,6 +448,8 @@ def build_pdf(input_path: Path = DEFAULT_INPUT, output_path: Path = DEFAULT_OUTP
 
 
 def main() -> int:
+    for path in write_diagrams():
+        print(f"OK: wrote {path.relative_to(ROOT).as_posix()}")
     output = build_pdf()
     print(f"OK: wrote {output.name} ({output.stat().st_size} bytes)")
     return 0

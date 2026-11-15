@@ -50,7 +50,7 @@ That is 11 research notes against a minimum of 10, plus 1 `ai-session` note and 
 | Problem | Evidence | Effect |
 | --- | --- | --- |
 | Late reviews | PRs #1 to #4 merged on 2026-11-08 with no review. Approval comments followed on 2026-11-09, by each PR's opener, and their pages still show "No reviews". PR #5 was formally approved by Hemakshi Jadeja before merging | The rule of a review before each merge was met only from PR #5, and the comment on PR #1 is by its own author |
-| No GitHub Issues | 0 issues exist | Work is not tracked as the rubric requires, and [[SE-5]] has nothing to trace |
+| Issues created late | Tracking issues #7 to #12 were created on 2026-11-09, after the Stage 1 work, with one issue per requirement series | Stage 1 work was not tracked in issues, and the issues have no labels, assignees or milestones yet |
 | SRS written last | The SRS was written after all research notes | The team's requirements were undefined during the research |
 | Skill evaluation only partial | The evaluation has no comparison with and without the skill, and there is no `evals` folder | [[TQ-7]] is only partly met |
 | Few, large commits | Members 2 and 3 have 1 commit each, and Member 1's main commit combines CI, skills and notes | Falls short of "meaningful incremental commits" |
@@ -83,7 +83,7 @@ Stage 1 ownership above is taken from Git history. **The owners below are propos
 | --- | --- | --- |
 | Review the latest SRS changes in a PR, and record its adopted decisions as ADRs | [[SE-1]], [[SE-3]] | All members |
 | Compare `brain-ingest` with and without the skill, and record the results | [[TQ-7]] | Member 4 |
-| Create Issues, and enable branch protection | [[SE-5]] | Member 1 |
+| Correct the SB-1, SB-2 and SB-5 descriptions in issue #12, assign owners to issues #7 to #12, and enable branch protection | [[SE-5]] | Member 1 |
 | Have another member comment on PR #1, whose only approval is from its author | [[SB-5]] | Member 2, 3 or 4 |
 | Add `ai-session` notes for Members 2, 3 and 4 | [[SB-6]] | Each member |
 | Convert plain-text links to wikilinks | [[SB-1]] | Member 3 |
@@ -128,7 +128,7 @@ Stage 1 status on 2026-11-09, checked against `SDLC_and_Workflow.pdf`:
 | Skill evaluations ([[TQ-7]]) | **Partial**: audit recorded in SRS Section 6.3, with no comparison run yet |
 | Every skill cites a distilled note ([[SB-3]]) | Done for `brain-ingest`, but not enforced |
 | Pull requests with reviews | **Partly met**: formal review on PR #5, and only retrospective comments on PRs #1 to #4 |
-| GitHub Issues for all work | **Not met**: 0 issues |
+| GitHub Issues for all work | **Partly met**: tracking issues #7 to #12, one per requirement series |
 
 The research also left design decisions open, which should become ADRs: how wallets receive their first funds, authentication, the treatment of insufficient funds under idempotency, and how to handle a reversal after the recipient has spent the money.
 

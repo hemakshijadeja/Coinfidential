@@ -84,3 +84,35 @@ Append-only record of changes to the brain, oldest first. Do not edit past entri
 - Changes: updated the cover to the template's layout and fields, added Revision History and Appendices A to C, moved the glossary to Appendix A, and retitled Section 1.3
 - Requirements linked: [[SE-1]]
 
+
+## [2026-11-15] srs | SRS simplified after TA feedback
+
+- Source: TA feedback that the [SRS](../docs/SRS.md) was too technical
+- Notes added: none
+- Notes updated: none
+- Changes: rewrote the SRS in plain language, removed the API definitions and design detail, and shortened it to fit 15 pages, keeping every requirement ID, the brief's exact wording and the research links
+- Requirements linked: [[SE-1]], [[SE-5]]
+
+## [2026-11-15] srs | Use case and sequence diagrams added to the SRS
+
+- Source: The [SRS](../docs/SRS.md)
+- Notes added: none
+- Notes updated: none
+- Changes: added a use case diagram (Section 2.2) and a transfer sequence diagram (Section 4.2.2) in place of tables that repeated the same information, and tightened spacing to stay within 15 pages
+- Requirements linked: [[SE-1]], [[SE-2]], [[FR-2]]
+
+## [2026-11-15] srs | GitHub issues linked in the traceability matrix
+
+- Source: GitHub issues #7 to #12 and PR #6
+- Notes added: none
+- Notes updated: [[stage1-review-retrospective]]
+- Changes: every row of the SRS traceability matrix now names its tracking issue, PR #6 is listed for the SRS rows, and the "no issues" gap was replaced by the remaining issue gaps
+- Requirements linked: [[SE-5]], [[SB-1]]
+
+## [2026-11-15] srs | Review fixes to the SRS PDF
+
+- Source: A review of the [SRS](../docs/SRS.md) PDF
+- Notes added: none
+- Notes updated: none
+- Changes: SB-5 now lists PRs #1 to #6, and table columns are sized for code text so names such as `simulate-transfer` no longer break mid-word
+- Requirements linked: [[SB-5]]

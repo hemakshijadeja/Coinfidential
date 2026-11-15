@@ -4,8 +4,10 @@ import re
 from pathlib import Path
 
 import pytest
+from reportlab.graphics import renderSVG
 
 from scripts.generate_srs_pdf import build_pdf
+from scripts.srs_diagrams import DIAGRAMS
 
 ROOT = Path(__file__).resolve().parent.parent
 SRS = ROOT / "docs" / "SRS.md"
@@ -120,10 +122,7 @@ def test_wikilinks_resolve_to_brain_notes(srs_text: str) -> None:
 
 
 def test_requirement_ids_exist_in_their_series(srs_text: str) -> None:
-    # The fault injection section names out-of-range IDs on purpose.
-    before, after = srs_text.split("#### 6.3.3", 1)
-    checked = before + after.split("#### 6.3.4", 1)[1]
-    for series, number in re.findall(r"\b(FR|NFR|SK|TQ|SE|SB)-(\d+)\b", checked):
+    for series, number in re.findall(r"\b(FR|NFR|SK|TQ|SE|SB)-(\d+)\b", srs_text):
         assert 1 <= int(number) <= SERIES_LIMITS[series], f"{series}-{number} is out of range"
 
 
@@ -133,6 +132,7 @@ def test_traceability_matrix_covers_every_requirement(srs_text: str) -> None:
     for requirement in [*REQUIRED_IDS, "Security Testing"]:
         assert requirement in rows, f"{requirement} is missing from the matrix"
         assert len(rows[requirement]) == 6, f"{requirement} needs 6 columns"
+        assert re.fullmatch(r"#\d+", rows[requirement][1]), f"{requirement} needs a GitHub issue"
         assert "[[" in rows[requirement][5], f"{requirement} needs a brain note link"
 
 
@@ -145,9 +145,8 @@ def test_every_feature_uses_only_the_three_ieee_subheaders(srs_text: str) -> Non
             f"4.{number}.2 Stimulus/Response Sequences",
             f"4.{number}.3 Functional Requirements",
         ]
-        for label in ("**Priority:**", "**Pre-conditions", "**Post-conditions", "**Error cases:**", "**Acceptance criteria:**"):
+        for label in ("From the brief:", "**Priority:**", f"**FR-{number}.1**", "**Acceptance criteria:**"):
             assert label in section.group(0), f"FR-{number} is missing {label}"
-        assert "Invariants" in section.group(0), f"FR-{number} is missing invariants"
 
 
 def test_every_nonfunctional_requirement_is_in_section_five(srs_text: str) -> None:
@@ -157,19 +156,32 @@ def test_every_nonfunctional_requirement_is_in_section_five(srs_text: str) -> No
         assert f"| NFR-{number} |" in section, f"NFR-{number} is missing from Section 5"
 
 
-def test_every_endpoint_contract_requires_a_bearer_token(srs_text: str) -> None:
-    contracts = section_between(srs_text, "#### 3.3.3", "#### 3.3.9")
-    method_rows = re.findall(r"^\| Method and URL \| `.*$", contracts, re.MULTILINE)
-    header_rows = re.findall(r"^\| Request headers \| `Authorization: Bearer <token>`.*$", contracts, re.MULTILINE)
-
-    assert method_rows
-    assert len(header_rows) == len(method_rows)
-    assert "X-Admin-Key" not in srs_text
+def test_document_avoids_api_definitions(srs_text: str) -> None:
+    # The TA asked for plain language, so the SRS states requirements without API definitions.
+    for technical in ("/api/v1", "Method and URL", "Request headers", "amount_minor", "CREATE TRIGGER", "X-Admin-Key"):
+        assert technical not in srs_text, f"{technical} is an API or design detail"
 
 
-def test_amount_limit_is_adopted(srs_text: str) -> None:
-    assert re.search(r"OD-5 \|.*10\^12.*\*\*Closed\*\*", srs_text)
-    assert "`amount_minor` (strict integer, 1 to 10^12)" in srs_text
+def test_authentication_and_amount_limit_are_required(srs_text: str) -> None:
+    security = section_between(srs_text, "### 5.3 Security Requirements", "### 5.4")
+
+    assert "`Authorization: Bearer <token>`" in security
+    assert "1 to 10^12" in security
+    assert re.search(r"OD-5 \|.*10\^12", srs_text)
+
+
+def test_figures_have_drawings_and_current_svg_files(srs_text: str) -> None:
+    figures = re.findall(r"^!\[(Figure \d+: [^\]]+)\]\(([^)]+)\)$", srs_text, re.MULTILINE)
+
+    assert len(figures) == 2
+    for _caption, image in figures:
+        name = Path(image).stem
+        assert name in DIAGRAMS, f"{image} has no drawing in srs_diagrams.py"
+        svg = ROOT / "docs" / image
+        assert svg.is_file(), f"{image} is missing; run python scripts/generate_srs_pdf.py"
+        assert svg.read_text(encoding="utf-8") == renderSVG.drawToString(DIAGRAMS[name]()), (
+            f"{image} is out of date; run python scripts/generate_srs_pdf.py"
+        )
 
 
 def test_pdf_generates(tmp_path: Path) -> None:

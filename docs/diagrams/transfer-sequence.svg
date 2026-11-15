@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="480" height="345" preserveAspectRatio="xMinYMin meet" viewBox="0 0 480 345" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="480" height="345"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-345)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="49.1935" y="318" width="41.613" height="22" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="58.1935" y="326" style="font-family: Helvetica-Bold; font-size: 8.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,652) scale(1,-1)">Client</text>
+			<path d="M 70,318 L 70,8 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.7; stroke-dasharray: 2, 2;"/>
+			<rect x="194.43075" y="318" width="101.13850000000002" height="22" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="203.43075" y="326" style="font-family: Helvetica-Bold; font-size: 8.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,652) scale(1,-1)">Coinfidential service</text>
+			<path d="M 245,318 L 245,8 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.7; stroke-dasharray: 2, 2;"/>
+			<rect x="372.22525" y="318" width="85.54950000000002" height="22" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="381.22525" y="326" style="font-family: Helvetica-Bold; font-size: 8.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,652) scale(1,-1)">Ledger database</text>
+			<path d="M 415,318 L 415,8 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.7; stroke-dasharray: 2, 2;"/>
+			<path d="M 70,300 L 245,300 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="245 300, 238 303, 238 297" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="87.3105" y="303.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,607) scale(1,-1)">1. Transfer request with idempotency key K</text>
+			<path d="M 245,279 L 415,279 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 279, 408 282, 408 276" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="284.15235" y="282.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,565) scale(1,-1)">2. Lock the ledger for writing</text>
+			<path d="M 245,258 L 415,258 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 258, 408 261, 408 255" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="277.8561" y="261.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,523) scale(1,-1)">3. Has key K been used before?</text>
+			<path d="M 415,237 L 245,237 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<polygon points="245 237, 252 240, 252 234" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="321.2765" y="240.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,481) scale(1,-1)">4. No</text>
+			<path d="M 245,216 L 415,216 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 216, 408 219, 408 213" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="287.9958" y="219.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,439) scale(1,-1)">5. Is the balance enough?</text>
+			<path d="M 415,195 L 245,195 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<polygon points="245 195, 252 198, 252 192" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="319.65225" y="198.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,397) scale(1,-1)">6. Yes</text>
+			<path d="M 245,174 L 415,174 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 174, 408 177, 408 171" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="270.34805" y="177.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,355) scale(1,-1)">7. Save both entries, balances and K</text>
+			<path d="M 415,153 L 245,153 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<polygon points="245 153, 252 156, 252 150" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="296.7266" y="156.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,313) scale(1,-1)">8. All saved together</text>
+			<path d="M 245,132 L 108.5,132 Z" style="stroke: rgb(70%,13%,9%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<path d="M 104.5,128 L 112.5,136 Z" style="stroke: rgb(70%,13%,9%); stroke-linecap: butt; stroke-width: 1.4;"/>
+			<path d="M 104.5,136 L 112.5,128 Z" style="stroke: rgb(70%,13%,9%); stroke-linecap: butt; stroke-width: 1.4;"/>
+			<text x="117.3648" y="135.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(70%,13%,9%); stroke:none;" transform="translate(0,271) scale(1,-1)">9. Confirmation lost (network error)</text>
+			<rect x="18" y="107" width="444" height="14" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="149.1225" y="111" style="font-family: Helvetica-Bold; font-size: 7.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,222) scale(1,-1)">The client retries, because it never received a reply</text>
+			<path d="M 70,90 L 245,90 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="245 90, 238 93, 238 87" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="107.59355" y="93.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,187) scale(1,-1)">10. Same request, same key K</text>
+			<path d="M 245,69 L 415,69 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1;"/>
+			<polygon points="415 69, 408 72, 408 66" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="275.8267" y="72.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,145) scale(1,-1)">11. Has key K been used before?</text>
+			<path d="M 415,48 L 245,48 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<polygon points="245 48, 252 51, 252 45" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="317.62284999999997" y="51.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,103) scale(1,-1)">12. Yes</text>
+			<path d="M 245,27 L 70,27 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 2;"/>
+			<polygon points="70 27, 77 30, 77 24" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 0.5; fill: rgb(12%,22%,37%); fill-rule: evenodd;"/>
+			<text x="88.12445" y="30.5" style="font-family: Helvetica; font-size: 7.3px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,61) scale(1,-1)">13. Original confirmation; no money moves</text>
+		</g>
+	</g>
+</svg>

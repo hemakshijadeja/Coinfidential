@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="480" height="270" preserveAspectRatio="xMinYMin meet" viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="480" height="270"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-270)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="130" y="12" width="220" height="246" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="211.234" y="244" style="font-family: Helvetica-Bold; font-size: 9.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,488) scale(1,-1)">Coinfidential</text>
+			<ellipse cx="240.0" cy="212.0" rx="92.0" ry="17.0" style="stroke: rgb(12%,37%,65%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="191.756" y="213" style="font-family: Helvetica; font-size: 8px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,426) scale(1,-1)">Create account and wallets</text>
+			<text x="232.7785" y="203" style="font-family: Helvetica; font-size: 6.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,406) scale(1,-1)">FR-1</text>
+			<ellipse cx="240.0" cy="170.0" rx="92.0" ry="17.0" style="stroke: rgb(12%,37%,65%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="211.992" y="171" style="font-family: Helvetica; font-size: 8px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,342) scale(1,-1)">Transfer money</text>
+			<text x="223.75" y="161" style="font-family: Helvetica; font-size: 6.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,322) scale(1,-1)">FR-2, FR-3</text>
+			<ellipse cx="240.0" cy="128.0" rx="92.0" ry="17.0" style="stroke: rgb(12%,37%,65%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="199.32" y="129" style="font-family: Helvetica; font-size: 8px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,258) scale(1,-1)">View wallet and history</text>
+			<text x="232.7785" y="119" style="font-family: Helvetica; font-size: 6.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,238) scale(1,-1)">FR-4</text>
+			<ellipse cx="240.0" cy="86.0" rx="92.0" ry="17.0" style="stroke: rgb(12%,37%,65%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="207.1" y="87" style="font-family: Helvetica; font-size: 8px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,174) scale(1,-1)">Reverse a transfer</text>
+			<text x="232.7785" y="77" style="font-family: Helvetica; font-size: 6.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,154) scale(1,-1)">FR-4</text>
+			<ellipse cx="240.0" cy="44.0" rx="92.0" ry="17.0" style="stroke: rgb(12%,37%,65%); stroke-linecap: butt; stroke-width: 1; fill: rgb(93%,95%,97%); fill-rule: evenodd;"/>
+			<text x="198.204" y="45" style="font-family: Helvetica; font-size: 8px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,90) scale(1,-1)">Check the whole ledger</text>
+			<text x="232.7785" y="35" style="font-family: Helvetica; font-size: 6.5px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,70) scale(1,-1)">FR-5</text>
+			<circle cx="55" cy="150" r="7" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 55,143 L 55,120 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 42,135 L 68,135 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 55,120 L 45,100 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 55,120 L 65,100 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<text x="28.31425" y="88" style="font-family: Helvetica-Bold; font-size: 8.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,176) scale(1,-1)">Wallet holder</text>
+			<circle cx="425" cy="150" r="7" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<path d="M 425,143 L 425,120 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 412,135 L 438,135 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 425,120 L 415,100 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<path d="M 425,120 L 435,100 Z" style="stroke: rgb(12%,22%,37%); stroke-linecap: butt; stroke-width: 1.2;"/>
+			<text x="397.137" y="88" style="font-family: Helvetica-Bold; font-size: 8.5px;fill: rgb(12%,22%,37%); stroke:none;" transform="translate(0,176) scale(1,-1)">Administrator</text>
+			<path d="M 69,135 L 148,212 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 69,135 L 148,170 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 69,135 L 148,128 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 69,135 L 148,86 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 411,135 L 332,128 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 411,135 L 332,86 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<path d="M 411,135 L 332,44 Z" style="stroke: rgb(35%,39%,44%); stroke-linecap: butt; stroke-width: 0.8;"/>
+			<text x="168.999" y="1" style="font-family: Helvetica; font-size: 7px;fill: rgb(35%,39%,44%); stroke:none;" transform="translate(0,2) scale(1,-1)">Every use case requires a valid access token.</text>
+		</g>
+	</g>
+</svg>
