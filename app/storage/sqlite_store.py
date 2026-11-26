@@ -17,7 +17,10 @@ GENESIS_HASH = "0" * 64
 def connect(path: str | Path) -> sqlite3.Connection:
     """Open a connection with all the pragmas every connection needs."""
     # isolation_level=None means Python never starts transactions on its own; we do it ourselves.
-    conn = sqlite3.connect(path, isolation_level=None)
+    # check_same_thread=False because FastAPI may run a request's dependency and route in
+    # different threads. It is still safe: each request opens its own connection and uses it
+    # one step at a time.
+    conn = sqlite3.connect(path, isolation_level=None, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")
     conn.execute("PRAGMA foreign_keys=ON")
@@ -169,3 +172,14 @@ class SqliteStore:
             "VALUES (?, ?, ?, ?, ?, ?)",
             (account_id, idem_key, request_hash, transaction_id, status_code, response_body),
         )
+
+    def save_token(self, token_hash: str, account_id: int | None, role: str, expires_at: str) -> None:
+        """Save a token's hash, never the token itself (ADR-0005)."""
+        self.conn.execute(
+            "INSERT INTO tokens (token_hash, account_id, role, expires_at) VALUES (?, ?, ?, ?)",
+            (token_hash, account_id, role, expires_at),
+        )
+
+    def get_token(self, token_hash: str) -> dict | None:
+        row = self.conn.execute("SELECT * FROM tokens WHERE token_hash = ?", (token_hash,)).fetchone()
+        return dict(row) if row else None
