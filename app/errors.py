@@ -59,8 +59,31 @@ class ValidationFailed(AppError):
     message = "The request is not valid."
 
 
+class MissingIdempotencyKey(AppError):
+    status_code = 400
+    code = "missing_idempotency_key"
+    message = "This request needs an Idempotency-Key header."
+
+
+class InsufficientFunds(AppError):
+    status_code = 409
+    code = "insufficient_funds"
+    message = "The wallet does not have enough money for this transfer."
+
+
+class IdempotencyKeyReused(AppError):
+    status_code = 422
+    code = "idempotency_key_reused"
+    message = "This idempotency key was already used for a different request."
+
+
+def error_body(code: str, message: str) -> dict:
+    """The JSON body every error uses (docs/api.md section 2)."""
+    return {"error": {"code": code, "message": message}}
+
+
 def error_response(status_code: int, code: str, message: str) -> JSONResponse:
-    return JSONResponse(status_code=status_code, content={"error": {"code": code, "message": message}})
+    return JSONResponse(status_code=status_code, content=error_body(code, message))
 
 
 async def handle_app_error(request: Request, error: AppError) -> JSONResponse:

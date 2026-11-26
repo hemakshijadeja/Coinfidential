@@ -6,15 +6,12 @@ from fastapi import APIRouter, Depends, Path
 
 from app.api.auth import current_token, require_admin
 from app.api.deps import get_store
-from app.api.schemas import AccountOut, NewAccount, WalletDetails
+from app.api.schemas import MAX_ID, AccountOut, NewAccount, WalletDetails
 from app.errors import Forbidden, NotFound, ValidationFailed
 from app.ledger import wallets as ledger
 from app.storage import WalletStore
 
 router = APIRouter()
-
-# The largest ID SQLite can store. Bigger numbers get 422 instead of crashing.
-MAX_ID = 2**63 - 1
 
 
 @router.post("/accounts", status_code=201, response_model=AccountOut)

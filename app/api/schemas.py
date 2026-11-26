@@ -9,6 +9,8 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 
 MAX_AMOUNT = 10**12  # BR-5
+# The largest ID SQLite can store. Bigger numbers get 422 instead of crashing.
+MAX_ID = 2**63 - 1
 
 Currency = Literal["INR", "USD"]  # ADR-0001
 
@@ -44,3 +46,21 @@ class WalletDetails(BaseModel):
     account_id: int
     currency: Currency
     balance: int
+
+
+class NewTransfer(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    from_wallet_id: StrictInt = Field(ge=1, le=MAX_ID)
+    to_wallet_id: StrictInt = Field(ge=1, le=MAX_ID)
+    # 1 to 10^12, so negative amounts are rejected (FR-2.5, BR-5).
+    amount: StrictInt = Field(ge=1, le=MAX_AMOUNT)
+
+
+class TransferOut(BaseModel):
+    transfer_id: int
+    from_wallet_id: int
+    to_wallet_id: int
+    amount: int
+    currency: Currency
+    created_at: str
