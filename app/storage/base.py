@@ -1,0 +1,36 @@
+"""The storage interface the ledger rules talk to (ADR-0006). It has no SQL in it."""
+
+from contextlib import AbstractContextManager
+from typing import Protocol
+
+
+class WalletStore(Protocol):
+    def write_transaction(self) -> AbstractContextManager["WalletStore"]: ...
+
+    def create_account(self, name: str) -> int: ...
+
+    def create_wallet(self, account_id: int, currency: str) -> int: ...
+
+    def get_wallet(self, wallet_id: int) -> dict | None: ...
+
+    def system_wallet_id(self, currency: str) -> int: ...
+
+    def credit(self, wallet_id: int, amount: int) -> None: ...
+
+    def debit(self, wallet_id: int, amount: int) -> bool: ...
+
+    def add_transaction(self, kind: str, reverses: int | None = None) -> int: ...
+
+    def add_entry(self, transaction_id: int, wallet_id: int, direction: str, amount: int) -> int: ...
+
+    def get_idempotency(self, account_id: int, idem_key: str) -> dict | None: ...
+
+    def save_idempotency(
+        self,
+        account_id: int,
+        idem_key: str,
+        request_hash: str,
+        transaction_id: int | None,
+        status_code: int,
+        response_body: str,
+    ) -> None: ...
